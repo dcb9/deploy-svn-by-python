@@ -1,6 +1,3 @@
-# @since 2014-09-22 14:35
-# @author bob <bob@jjwxc.com>
-# @version $Id$
 #coding=utf-8
 
 import sys 
@@ -12,9 +9,8 @@ from config import *
 from tools import implode, get_svn_changes, svnpath_2_realpath
 
 
-def fetch_svn():
+def fetch_svn(changes):
     changes_str = ''
-    # changes from global variable
     for i in changes:
         changes_str = changes_str + ' ' + os.path.join(LOCAL_ROOT, i[1])
 
@@ -51,9 +47,7 @@ def depoly_to_online():
 if __name__ == "__main__":
     REV=int(sys.argv[1])
     REPOS=sys.argv[2]
-    changes = get_svn_changes(
-                            "-r %d %s" % (REV, REPOS)
-                            )
+    changes = get_svn_changes( "-r %d %s" % (REV, REPOS) )
     if changes:
-        fetch_svn()
-        depoly_to_online()
+        fetch_svn(changes)
+        depoly_to_online(changes)
